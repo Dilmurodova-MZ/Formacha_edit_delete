@@ -3,7 +3,12 @@ from .models import *
 from .forms import *
 
 def home(request):
-    table = Table.objects.all()
+    if 'q' in request.GET:
+        qidirish = request.GET['q']
+        table    = Table.objects.filter(name__icontains = qidirish )
+    else:
+        table = Table.objects.all()
+    # table = Table.objects.all()
     context = {
         'table':table,
     }

@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from .forms import *
+from django.db.models import Q
 
 def home(request):
     if 'q' in request.GET:
         qidirish = request.GET['q']
-        table    = Table.objects.filter(name__icontains = qidirish )
+        table    = Table.objects.filter(Q(Q(name__icontains = qidirish ) | Q(count__icontains = qidirish) | Q(price__icontains = qidirish )))
     else:
         table = Table.objects.all()
     # table = Table.objects.all()
